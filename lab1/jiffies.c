@@ -4,7 +4,7 @@
 #include <linux/proc_fs.h>
 #include <linux/jiffies.h>
 
-#define BUFFER_SIZE 120
+#define BUFFER_SIZE 128
 #define PROC_NAME "jiffies"
 
 /**

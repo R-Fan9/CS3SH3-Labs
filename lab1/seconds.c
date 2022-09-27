@@ -5,7 +5,7 @@
 #include <linux/jiffies.h>
 #include <asm/param.h>
 
-#define BUFFER_SIZE 120
+#define BUFFER_SIZE 128
 #define PROC_NAME "seconds"
 
 /**
