@@ -3,6 +3,7 @@
 #include <linux/kernel.h>
 #include <linux/proc_fs.h>
 #include <linux/jiffies.h>
+#include <asm/uaccess.h>
 
 #define BUFFER_SIZE 128
 #define PROC_NAME "jiffies"
@@ -18,7 +19,7 @@ static struct file_operations proc_ops = {
 };
 
 int proc_init(void){
-    struct proc_dir_entry *pde = proc_create(PROC_NAME, 0, NULL, &proc_ops)
+    proc_create(PROC_NAME, 0, NULL, &proc_ops);
     printk(KERN_INFO "/proc/%s created\n", PROC_NAME);
     return 0;
 }
@@ -30,7 +31,7 @@ void proc_exit(void){
 
 ssize_t proc_read(struct file *file, char __user *usr_buf, size_t count, loff_t *pos){
     int rv = 0;
-    char buffer[BUFFER_SIZE]
+    char buffer[BUFFER_SIZE];
     static int complete = 0;
 
     if(complete){
