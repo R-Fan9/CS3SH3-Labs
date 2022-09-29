@@ -7,7 +7,7 @@
 
 #define BUFFER_SIZE 128
 #define PROC_NAME "seconds"
-
+static unsigned long start_time;
 /**
  * Function prototypes
  */
@@ -19,6 +19,7 @@ static struct file_operations proc_ops = {
 };
 
 int proc_init(void){
+    start_time = jiffies;
     struct proc_dir_entry *pde = proc_create(PROC_NAME, 0, NULL, &proc_ops)
     printk(KERN_INFO "/proc/%s created\n", PROC_NAME);
     return 0;
@@ -27,13 +28,6 @@ int proc_init(void){
 void proc_exit(void){
     remove_proc_entry(PROC_NAME, NULL);
     printk(KERN_INFO "/proc/%s removed\n", PROC_NAME);
-}
-
-float seconds_elapsed(void){
-    float secs = 0.0;
-
-    secs = (float)jiffies/HZ;
-    return secs;
 }
 
 ssize_t proc_read(struct file *file, char __user *usr_buf, size_t count, loff_t *pos){
@@ -48,7 +42,7 @@ ssize_t proc_read(struct file *file, char __user *usr_buf, size_t count, loff_t 
 
     complete = 1;
     
-    rv = sprintf(buffer, "time elapsed: %lf seconds\n", seconds_elapsed());
+    rv = sprintf(buffer, "time elapsed: %lf seconds\n", (jiffies - start_time)/HZ);
 
     copy_to_user(usr_buf, buffer, rv);
 
