@@ -4,9 +4,7 @@
 \usepackage{color}
 \usepackage{listings}
 
-
 \begin{document}
-
 \begin{center}
 	{\Large \textbf{Lab 1 Report}}\\[6mm]
 	\begin{tabular}{l}
@@ -20,6 +18,20 @@
 
 \medskip
 
+\subsection*{jiffies.ko}
+This kernel module creates a /proc file named /proc/jiffies 
+that reports the current value of \emph{jiffies} when the /proc/jiffies 
+file is read, such as with command: \\
+
+cat /proc/jiffies \\
+
+\noindent 
+File /proc/jiffies is removed when the moduleis removed
+
+\lstinputlisting[breaklines]{./jiffies/jiffies.c}
+
+\medskip
+
 \subsection*{seconds.ko}
 This kernel module creates a proc file named /proc/seconds 
 taht reports the number of elapsed seconds since the kernel 
@@ -29,9 +41,8 @@ rate. When a user enter command: \\
 cat /proc/seconds \\
 
 \noindent 
-The kernel module will report the number of seconds the kernel 
+The kernel module will report the number oslf seconds the kernel 
 module has been loaded. The file /proc/seconds is removed 
 when the module is removed
-\lstinputlisting[breaklines]{seconds.c}
-
+\lstinputlisting[breaklines]{./seconds/seconds.c}
 \end{document}
