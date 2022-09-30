@@ -1,0 +1,37 @@
+
+\documentclass[11pt,fleqn]{article}
+
+\usepackage{color}
+\usepackage{listings}
+
+
+\begin{document}
+
+\begin{center}
+	{\Large \textbf{Lab 1 Report}}\\[6mm]
+	\begin{tabular}{l}
+        {\large Name: Ricky Fan}       \\
+		{\large Email: fanh11@mcmaster.ca} \\
+		{\large Student ID: 400248976}    \\
+		{\large Date: 02/10/19}
+	\end{tabular}
+
+\end{center}
+
+\medskip
+
+\subsection*{seconds.ko}
+This kernel module creates a proc file named /proc/seconds 
+taht reports the number of elapsed seconds since the kernel 
+module was loaded. It uses the value \emph{jiffies} and \emph{HZ} 
+rate. When a user enter command: \\
+
+cat /proc/seconds \\
+
+\noindent 
+The kernel module will report the number of seconds the kernel 
+module has been loaded. The file /proc/seconds is removed 
+when the module is removed
+\lstinputlisting[breaklines]{seconds.c}
+
+\end{document}

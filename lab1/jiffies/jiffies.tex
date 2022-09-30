@@ -1,0 +1,33 @@
+\documentclass[11pt,fleqn]{article}
+
+\usepackage{color}
+\usepackage{listings}
+
+\begin{document}
+
+\begin{center}
+	{\Large \textbf{Lab 1 Report}}\\[6mm]
+	\begin{tabular}{l}
+        {\large Name: Ricky Fan}       \\
+		{\large Email: fanh11@mcmaster.ca} \\
+		{\large Student ID: 400248976}    \\
+		{\large Date: 02/10/19}
+	\end{tabular}
+
+\end{center}
+
+\medskip
+
+\subsection*{jiffies.ko}
+This kernel module creates a /proc file named /proc/jiffies 
+that reports the current value of \emph{jiffies} when the /proc/jiffies 
+file is read, such as with command: \\
+
+cat /proc/jiffies \\
+
+\noindent 
+File /proc/jiffies is removed when the moduleis removed
+
+\lstinputlisting[breaklines]{jiffies.c}
+
+\end{document}
