@@ -31,7 +31,7 @@
 // Define a static variable to store
 // the value of jiffies when the
 // kernel module first loaded
-static unsigned long start_jiffies;
+unsigned long start_jiffies;
 
 /**
  * Function prototypes
