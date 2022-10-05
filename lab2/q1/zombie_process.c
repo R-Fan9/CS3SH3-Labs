@@ -1,12 +1,15 @@
 #include <sys/types.h>
 #include <stdio.h>
 #include <unistd.h>
+#include <stdlib.h>
 
 int main()
 {
-    pid t pid;
+    pid_t pid;
+
     /* fork a child process */
     pid = fork();
+
     if (pid < 0)
     { /* error occurred */
         fprintf(stderr, "Fork Failed");
@@ -14,14 +17,14 @@ int main()
     }
     else if (pid == 0)
     { /* child process */
-        sleep(10);
-        exit(0);
+	printf("%s", "Child Zombie\n");
+	exit(0);
     }
     else
     { /* parent process */
-        /* parent will wait for the child to complete */
-        // wait(NULL);
-        printf("Child Complete");
+        sleep(10);
+	wait(NULL);
+        printf("%s", "Child Complete\n");
     }
     return 0;
 }

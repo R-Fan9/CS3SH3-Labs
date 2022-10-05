@@ -1,1 +1,0 @@
-cmd_/home/osc/labs/lab1/seconds/seconds.ko := ld -r -m elf_x86_64 -T ./scripts/module-common.lds --build-id  -o /home/osc/labs/lab1/seconds/seconds.ko /home/osc/labs/lab1/seconds/seconds.o /home/osc/labs/lab1/seconds/seconds.mod.o
