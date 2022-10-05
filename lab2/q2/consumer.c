@@ -4,6 +4,7 @@
 #include <sys/shm.h>
 #include <sys/stat.h>
 #include <sys/mman.h>
+
 int main()
 {
     /* the size (in bytes) of shared memory object */
@@ -15,10 +16,10 @@ int main()
     /* pointer to shared memory obect */
     char *ptr;
     /* open the shared memory object */
-    fd = shm_open(name, O RDONLY, 0666);
+    fd = shm_open(name, O_RDONLY, 0666);
     /* memory map the shared memory object */
     ptr = (char *)
-        mmap(0, SIZE, PROT READ | PROT WRITE, MAP SHARED, fd, 0);
+        mmap(0, SIZE, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
     /* read from the shared memory object */
     printf("%s", (char *)ptr);
     /* remove the shared memory object */
