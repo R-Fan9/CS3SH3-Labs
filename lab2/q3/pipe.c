@@ -31,7 +31,7 @@ int main()
     {
         close(fd[READ_END]);
 
-        write(fd[WRITE_END], write_msg, strLen(write_msg) + 1);
+        write(fd[WRITE_END], write_msg, strlen(write_msg) + 1);
 
         close(fd[WRITE_END]);
     }
