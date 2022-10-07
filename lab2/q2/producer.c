@@ -5,6 +5,7 @@
 #include <sys/shm.h>
 #include <sys/stat.h>
 #include <sys/mman.h>
+#include <unistd.h>
 
 int main()
 {
@@ -26,9 +27,9 @@ int main()
     /* memory map the shared memory object */
     ptr = (char *)mmap(0, SIZE, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
     /* write to the shared memory object */
-    sprintf(ptr, "%s", message 0);
-    ptr += strlen(message 0);
-    sprintf(ptr, "%s", message 1);
-    ptr += strlen(message 1);
+    sprintf(ptr, "%s", message_0);
+    ptr += strlen(message_0);
+    sprintf(ptr, "%s", message_1);
+    ptr += strlen(message_1);
     return 0;
 }
