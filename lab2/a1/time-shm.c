@@ -1,59 +1,70 @@
+#include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <fcntl.h>
-#include <sys/shm.h>
 #include <sys/stat.h>
-#include <sys/mman.h>
 #include <sys/time.h>
 
 int main(int argc, char *argv[])
 {
-    /* the size (in bytes) of shared memory object */
-    const int SIZE = 4096;
-    /* name of the shared memory object */
-    const char *name = "OS";
-    /* shared memory file descriptor */
-    int fd;
-    /* pointer to shared memory obect */
-    char *ptr;
-    struct timeval current_time;
 
-    /* create the shared memory object */
-    fd = shm_open(name, O_CREAT | O_RDWR, 0666);
-    /* configure the size of the shared memory object */
-    ftruncate(fd, SIZE);
-    /* memory map the shared memory object */
-    ptr = (char *)mmap(0, SIZE, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
+    char **ptr = argv;
 
-    pid_t pid;
-
-    pid = fork();
-
-    if (pid == 0)
+    while (*ptr != NULL)
     {
-        gettimeofday(&current_time, NULL);
-        sprintf(ptr, "%ld", current_time.tv_sec);
-        exec(argv[0]);
+        printf("%s\n", *ptr);
+        ptr++;
     }
-    else if (pid > 0)
-    {
-        wait(NULL);
-        /* open the shared memory object */
-        fd = shm_open(name, O_RDONLY, 0666);
-        /* memory map the shared memory object */
-        ptr = (char *)mmap(0, SIZE, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
-        /* read from the shared memory object */
-        // printf("%s", (char *)ptr);
-        char *start_time = (char *)ptr;
+    const char *programName = "ls";
+    const char *args[] = {programName, ".", NULL};
+    execvp(programName, args);
 
-        gettimeofday(&current_time, NULL);
+    // /* the size (in bytes) of shared memory object */
+    // const int SIZE = 4096;
+    // /* name of the shared memory object */
+    // const char *name = "OS";
+    // /* shared memory file descriptor */
+    // int fd;
+    // /* pointer to shared memory obect */
+    // char *ptr;
+    // struct timeval current_time;
 
-        printf("Elasped time: %ld", current_time.tv_sec - start_time);
+    // /* create the shared memory object */
+    // fd = shm_open(name, O_CREAT | O_RDWR, 0666);
+    // /* configure the size of the shared memory object */
+    // ftruncate(fd, SIZE);
+    // /* memory map the shared memory object */
+    // ptr = (char *)mmap(0, SIZE, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
 
-        /* remove the shared memory object */
-        shm_unlink(name);
-    }
+    // pid_t pid;
+
+    // pid = fork();
+
+    // if (pid == 0)
+    // {
+    //     gettimeofday(&current_time, NULL);
+    //     sprintf(ptr, "%ld", current_time.tv_sec);
+    //     execvp(argv[0], argv);
+    // }
+    // else if (pid > 0)
+    // {
+    //     wait(NULL);
+    //     /* open the shared memory object */
+    //     fd = shm_open(name, O_RDONLY, 0666);
+    //     /* memory map the shared memory object */
+    //     ptr = (char *)mmap(0, SIZE, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
+    //     /* read from the shared memory object */
+    //     // printf("%s", (char *)ptr);
+    //     char *start_time = (char *)ptr;
+
+    //     gettimeofday(&current_time, NULL);
+
+    //     printf("Elasped time: %ld", current_time.tv_sec - start_time);
+
+    //     /* remove the shared memory object */
+    //     shm_unlink(name);
+    // }
 
     return 0;
 }
