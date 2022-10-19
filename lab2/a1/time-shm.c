@@ -3,68 +3,65 @@
 #include <stdlib.h>
 #include <string.h>
 #include <fcntl.h>
+#include <sys/shm.h>
 #include <sys/stat.h>
 #include <sys/time.h>
+#include <sys/mman.h>
+#include <sys/wait.h>
+#include <sys/types.h>
 
 int main(int argc, char *argv[])
 {
+    const int SIZE = 4096;
+    const char *name = "OS";
+    int fd;
+    void *ptr;
+    pid_t pid;
+    struct timeval current_time;
 
-    char **ptr = argv;
+    fd = shm_open(name, O_CREAT | O_RDWR, 0666);
 
-    while (*ptr != NULL)
+    ftruncate(fd, SIZE);
+    ptr = mmap(0, SIZE, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
+    if (ptr == MAP_FAILED)
     {
-        printf("%s\n", *ptr);
-        ptr++;
+        printf("Map failed");
+        return -1;
     }
-    const char *programName = "ls";
-    const char *args[] = {programName, ".", NULL};
-    execvp(programName, args);
 
-    // /* the size (in bytes) of shared memory object */
-    // const int SIZE = 4096;
-    // /* name of the shared memory object */
-    // const char *name = "OS";
-    // /* shared memory file descriptor */
-    // int fd;
-    // /* pointer to shared memory obect */
-    // char *ptr;
-    // struct timeval current_time;
+    pid = fork();
 
-    // /* create the shared memory object */
-    // fd = shm_open(name, O_CREAT | O_RDWR, 0666);
-    // /* configure the size of the shared memory object */
-    // ftruncate(fd, SIZE);
-    // /* memory map the shared memory object */
-    // ptr = (char *)mmap(0, SIZE, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
+    if (pid < 0)
+    {
+        printf("Fork failed");
+        return -1;
+    }
+    else if (pid == 0)
+    {
+        gettimeofday(&current_time, NULL);
+        sprintf(ptr, "%ld", current_time.tv_usec);
+        execvp(argv[1], &argv[1]);
+    }
+    else if (pid > 0)
+    {
+        wait(NULL);
+        gettimeofday(&current_time, NULL);
 
-    // pid_t pid;
+        fd = shm_open(name, O_RDONLY, 0666);
+        ptr = mmap(0, SIZE, PROT_READ, MAP_SHARED, fd, 0);
+        if (ptr == MAP_FAILED)
+        {
+            printf("Map failed");
+            return -1;
+        }
 
-    // pid = fork();
+        char *rmn;
+        long start_time = strtol((char *) ptr, &rmn, 10);
 
-    // if (pid == 0)
-    // {
-    //     gettimeofday(&current_time, NULL);
-    //     sprintf(ptr, "%ld", current_time.tv_sec);
-    //     execvp(argv[0], argv);
-    // }
-    // else if (pid > 0)
-    // {
-    //     wait(NULL);
-    //     /* open the shared memory object */
-    //     fd = shm_open(name, O_RDONLY, 0666);
-    //     /* memory map the shared memory object */
-    //     ptr = (char *)mmap(0, SIZE, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
-    //     /* read from the shared memory object */
-    //     // printf("%s", (char *)ptr);
-    //     char *start_time = (char *)ptr;
+        printf("Elasped time: %lf seconds", (current_time.tv_usec - start_time)/1000000.0);
 
-    //     gettimeofday(&current_time, NULL);
-
-    //     printf("Elasped time: %ld", current_time.tv_sec - start_time);
-
-    //     /* remove the shared memory object */
-    //     shm_unlink(name);
-    // }
+        shm_unlink(name);
+    }
 
     return 0;
 }
