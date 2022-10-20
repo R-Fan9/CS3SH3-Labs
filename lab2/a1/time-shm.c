@@ -69,11 +69,10 @@ int main(int argc, char *argv[])
         st_ptr = strtok(NULL, " ");
         st_tv_usec = strtol(st_ptr, &rmn, 10);
 
-        struct timeval start_time = {st_tv_sec, st_tv_usec};
-        double st_sec = start_time.tv_sec+(start_time.tv_usec)/1000000.0;
+        double st_sec = st_tv_sec+(st_tv_usec)/1000000.0;
         double ct_sec = current_time.tv_sec+(current_time.tv_usec)/1000000.0;
 
-        printf("Elasped time: %lf seconds\n", ct_sec - st_sec);
+        printf("\nElasped time: %lf seconds\n", ct_sec - st_sec);
 
         shm_unlink(name);
     }
