@@ -23,11 +23,6 @@ int main(int argc, char *argv[])
 
     ftruncate(fd, SIZE);
     ptr = mmap(0, SIZE, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
-    if (ptr == MAP_FAILED)
-    {
-        fprintf(stderr, "Map failed");
-        return -1;
-    }
 
     pid = fork();
 
@@ -64,13 +59,12 @@ int main(int argc, char *argv[])
 
         long st_tv_sec, st_tv_usec;
         char *rmn;
-
         st_tv_sec = strtol(st_ptr, &rmn, 10);
         st_ptr = strtok(NULL, " ");
         st_tv_usec = strtol(st_ptr, &rmn, 10);
 
-        double st_sec = st_tv_sec+(st_tv_usec)/1000000.0;
-        double ct_sec = current_time.tv_sec+(current_time.tv_usec)/1000000.0;
+        double st_sec = st_tv_sec+st_tv_usec/1000000.0;
+        double ct_sec = current_time.tv_sec+current_time.tv_usec/1000000.0;
 
         printf("\nElasped time: %lf seconds\n", ct_sec - st_sec);
 
