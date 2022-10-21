@@ -34,10 +34,7 @@ int main(int argc, char *argv[])
     else if (pid == 0)
     {
         gettimeofday(&current_time, NULL);
-        sprintf(ptr, "%ld ", current_time.tv_sec);
-        ptr += strlen((char *)ptr);
-        sprintf(ptr, "%ld", current_time.tv_usec);
-        ptr += strlen((char *)ptr);
+        sprintf(ptr, "%lf", current_time.tv_sec + current_time.tv_usec/1000000.0);
         execvp(argv[1], &argv[1]);
     }
     else
@@ -53,17 +50,8 @@ int main(int argc, char *argv[])
             return -1;
         }
 
-        char st_str[strlen((char *) ptr)];
-        sprintf(st_str, "%s", (char *)ptr);
-        char *st_ptr = strtok(st_str, " ");
-
-        long st_tv_sec, st_tv_usec;
         char *rmn;
-        st_tv_sec = strtol(st_ptr, &rmn, 10);
-        st_ptr = strtok(NULL, " ");
-        st_tv_usec = strtol(st_ptr, &rmn, 10);
-
-        double st_sec = st_tv_sec+st_tv_usec/1000000.0;
+        double st_sec = strtod((char *) ptr,&rmn);
         double ct_sec = current_time.tv_sec+current_time.tv_usec/1000000.0;
 
         printf("\nElasped time: %lf seconds\n", ct_sec - st_sec);
