@@ -54,7 +54,7 @@ void *get_avg(void *params)
 {
     parameters *p = (parameters *)params;
     int size = p->size;
-    int *num = p->nums;
+    int *nums = p->nums;
     int sum = 0;
 
     for (int i = 0; i < size; i++)
@@ -75,6 +75,7 @@ void *get_avg(void *params)
 void *get_min(void *params)
 {
     parameters *p = (parameters *)params;
+    int size = p->size;
     int *nums = p->nums;
     int min = *nums;
 
@@ -94,6 +95,7 @@ void *get_min(void *params)
 void *get_max(void *params)
 {
     parameters *p = (parameters *)params;
+    int size = p->size;
     int *nums = p->nums;
     int max = *nums;
 
@@ -117,8 +119,8 @@ int main(int argc, const char *argv[])
 
     // size = argc;
 
-    int _nums[size];
-    for (int i = 0; i < size; i++)
+    int _nums[argc];
+    for (int i = 0; i < argc; i++)
     {
         int num = (int)strtol(argv[i], NULL, 10);
         _nums[i] = num;
@@ -150,7 +152,7 @@ int main(int argc, const char *argv[])
     // printf("The average value is %d\n", avg_res->value);
     // printf("The minimym value is %d\n", min_res->value);
     // printf("The maximum value is %d\n", max_res->value);
-    printf("The average value is %lu\n", avg_num);
+    printf("The average value is %f\n", avg_num);
     printf("The minimym value is %d\n", min_num);
     printf("The maximum value is %d\n", max_num);
 
