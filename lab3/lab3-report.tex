@@ -1,0 +1,48 @@
+\documentclass[11pt,fleqn]{article}
+
+\usepackage{color}
+\usepackage{listings}
+
+\begin{document}
+\begin{center}
+	{\Large \textbf{Lab 3 Report}}\\[6mm]
+	\begin{tabular}{l}
+        {\large Name: Ricky Fan}       \\
+		{\large Email: fanh11@mcmaster.ca} \\
+		{\large Student ID: 400248976}    \\
+		{\large Date: 06/1/2022}
+	\end{tabular}
+
+\end{center}
+
+\medskip
+
+\subsection*{stats.c}
+This C program determines the amount of time needed for a command to run 
+on the command line using the shared memory IPC mechanism. 
+The program can be run as \\
+
+./time-shm \textless command\textgreater \\
+
+\noindent
+and will output and amount of time elasped to run the input command. 
+
+
+\lstinputlisting[breaklines]{./stats/stats.c}
+
+\medskip
+
+\subsection*{prime.c}
+This C program determines the amount of time needed for a command to run 
+on the command line using the pipe IPC mechanism. 
+The program can be run as \\
+
+./time-pipe \textless command\textgreater \\
+
+\noindent
+and will output and amount of time elasped to run the input command. 
+
+\noindent 
+
+\lstinputlisting[breaklines]{./prime/prime.c}
+\end{document}
