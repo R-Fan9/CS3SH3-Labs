@@ -17,6 +17,24 @@ int available_forks[] = {1, 1, 1, 1, 1};
 pthread_mutex_t mutex;
 pthread_cond_t cond_t;
 
+void display_forks()
+{
+    printf("\n");
+    for (int i = 0; i < NUMBER_OF_THREADS; i++)
+    {
+        printf("fork_%d: ", i);
+        if (available_forks[i])
+        {
+            printf("free\n");
+        }
+        else
+        {
+            printf("taken\n");
+        }
+    }
+    printf("\n");
+}
+
 void think(int philosopher_number)
 {
     int r = rand() % 3 + 1;
@@ -39,13 +57,7 @@ void pickup_forks(int philosopher_number)
     int fork_j = (fork_i + 1) % NUMBER_OF_THREADS;
 
     pthread_mutex_lock(&mutex);
-
-    printf("\n");
-    for (int i = 0; i < NUMBER_OF_THREADS; i++)
-    {
-        printf("fork_%d status: %d\n", i, available_forks[i]);
-    }
-    printf("\n");
+    display_forks();
 
     while (!available_forks[fork_i] || !available_forks[fork_j])
     {
@@ -124,7 +136,11 @@ int main(int argc, const char *argv[])
         pthread_join(phils[p], 0);
     }
 
-    printf("\n");
+    printf("\nforks availability status:");
+
+    display_forks();
+
+    printf("philosophers dining status:\n");
     for (int i = 0; i < NUMBER_OF_THREADS; i++)
     {
         printf("phil_%d ", i);
