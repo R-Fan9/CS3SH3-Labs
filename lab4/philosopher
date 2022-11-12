@@ -1,0 +1,66 @@
+ - Conditional Variables:
+ 	- takes in a mutex lock
+ 	- temparily releases the lock, so that other thread can acquire it
+ 	
+Dining-Philosophers:
+ - All philosophers are thinking at first, whoever finsih thinking first gets to eat...
+ - Once a philosopher finishes eating, it releases the forks and 
+   it will try to eat again by picking up forks..
+ - On
+ 
+ - Think -> Hungry -> Eat -> Think
+p = (0,1,2,3,4)
+
+while(true):
+	if 
+	
+forks_available = (t,t,t,t)
+lock mutex
+cond_t cond_var
+
+//forks_con = (c0,c1,c2,c3)
+//forks = (0,1,2,3,4)
+
+pickup_forks(int i):
+	lock(mutex)
+	while(!forks_available[i] && !forks_available[(i+1)%5]):
+		cond_wait(cond_var, mutex)
+	
+	
+	forks_available[i] = f
+	forks_available[(i+1)%5] = f
+	
+	eat(i)
+	return_forks(i)
+	unlock(mutex)
+
+
+	//acquire(forks[i])
+	//acquire(forks[(i+1)%5])
+	//while(!forks_available[i] && !forks_available[(i+1)%5]):
+	//	cond_wait(forks_con[i], forks[i]);
+	//	cond_wait(forks_con[(i+1)%5], forks[(i+1)%5])
+	
+	//unlock(forks[i])
+	//unlock(forks[(i+1)%5])
+	
+return_forks(i):
+	lock(mutex);
+	forks_available[i] = t
+	forks_available[(i+1)%5] = t
+	cond_signal(cond_var)
+	unlock(mutex)
+	
+	think(i)
+	
+eat(i):
+	sleep(1..3)
+
+think(i):
+	sleep(1..3)
+	
+
+	
+	
+
+	
