@@ -1,0 +1,17 @@
+schedule_sjf:
+while head is not NULL:
+	p = pickNextTask()
+	run(p, p.burst)
+	delete(head, p)
+	
+pickNextTask():
+	tmp=head
+	p = tmp
+	minBurst = tmp.burst
+	
+	while tmp is not NULL
+		if(tmp.burst < minBurst)
+			minBurst = tmp.burst
+			p = tmp
+		tmp = tmp.next
+	return p

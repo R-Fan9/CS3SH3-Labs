@@ -11,6 +11,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <time.h>
 
 /**
  * defines the number of threads, 
@@ -200,6 +201,10 @@ int main(int argc, const char *argv[])
 {
     //initialize an array of 5 threads
     pthread_t phils[NUMBER_OF_THREADS];
+
+    //intializes random number generator
+    time_t t;
+    srand(time(&t));
 
     //initialize the mutex lock
     pthread_mutex_init(&mutex, 0);

@@ -1,0 +1,56 @@
+schedule_priority_rr:
+
+while head is not NULL:
+	ps = getHighestPriorityProcesses() - list of nodes
+	runRoundRobin(ps)
+	
+getHighestPriorityProcesses():
+	hp = getHighestPriority()
+	
+	ps = []
+	
+	tmp = head
+	while tmp is not NULL:
+		if(tmp.priority == hp)
+			ps.add(tmp)
+		tmp = tmp.next
+
+getHighestPriority():
+	tmp=head
+	hp=tmp.priority
+	while tmp is not NULL:
+		if(tmp.priority > hp)
+			hp = tmp.priority
+		tmp = tmp.next
+	return hp
+
+idx = 0
+runRoundRobin(ps):
+	numOfPs = ps.size
+	completedPs = 0
+	
+	while completedPs < numOfPs:
+		p = pickNextTask(ps)
+		if(p.burst > Q)
+			run(p, Q)
+			p.burst -= Q
+		else
+			run(p, p.burst)
+			completedPs++
+			p.burst = 0
+			
+			ps[idx] = NULL
+			# rmPfromPS(ps, p)
+			delete(head, p)
+			
+pickNextTask(ps):
+	while ps[idx] is NULL:
+		idx = (idx + 1)%ps.size
+	return ps[idx]
+	
+	
+	
+	
+
+		
+	

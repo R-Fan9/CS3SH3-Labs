@@ -18,14 +18,26 @@
 \medskip
 
 \subsection*{stats.c}
-This C program determines the amount of time needed for a command to run 
-on the command line using the shared memory IPC mechanism. 
+This C program simulates the dining-philosopher problem using 
+a POSIX mutex lock and a POSIX condition variable. There are 
+5 philosophers running on separate threads, each identified 
+by a number from 0 to 4. Philosophers alternate states between 
+thinking, being hungry (trying to pick up forks), and eating. 
+To simulate the thinking and eating states, each thread will 
+sleep for a random period between 1 to 3 seconds. When a 
+philosopher is hungry, he must pick up 2 of his neighboring 
+forks. If the forks are taken, the philosopher must 
+wait until the forks are returned by others. Once a philosopher 
+finishes eating and returns the forks, a cycle is completed. 
+In this program, each philosopher is required to complete 
+2 cycles to be considered finish dining.
 The program can be run as \\
 
-./time-shm \textless command\textgreater \\
+./dining-phil \\
 
 \noindent
-and will output and amount of time elasped to run the input command. 
+and will output the states of each philosopher, the availability 
+status of each forks and the complete status of the philosophers.
 
 
 \lstinputlisting[breaklines]{./dining-phil.c}
