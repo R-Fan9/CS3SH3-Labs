@@ -1,8 +1,12 @@
 /**
- * Implementation of various scheduling algorithms.
+ * schedule_sjf.c
  *
- * Shortest Job First scheduling
+ * C program that implements
+ * the Shortest Job First scheduling algorithm 
+ *
+ * fanh11@mcmaster.ca
  */
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <stddef.h>
@@ -11,36 +15,44 @@
 #include "list.h"
 #include "cpu.h"
 
+// pointer to the start of the task list
 struct node *head = NULL;
 
 Task *pickNextTask();
 
 // add a new task to the list of tasks
-void add(char *name, int priority, int burst) {
+void add(char *name, int priority, int burst)
+{
     // first create the new task
-    Task *newTask = (Task *) malloc(sizeof(Task));
+    Task *newTask = (Task *)malloc(sizeof(Task));
 
     newTask->name = name;
     newTask->priority = priority;
     newTask->burst = burst;
 
-    // insert the new task into the list of tasks 
+    // insert the new task into the list of tasks
     insert(&head, newTask);
 }
 
 /**
  * Run the shortest job first scheduler
  */
-void schedule() 
+void schedule()
 {
+    // pointer to the current running task
     Task *current;
 
-    while (head != NULL) {
+    // run until there is no more tasks in the list
+    while (head != NULL)
+    {
+        // pick a task
         current = pickNextTask();
 
-        run(current,current->burst);
+        // run the task
+        run(current, current->burst);
 
-        delete(&head, current);
+        // after the task is finished, delete it from the list
+        delete (&head, current);
     }
 }
 
@@ -49,16 +61,23 @@ void schedule()
  */
 Task *pickNextTask()
 {
-struct node *temp;
-Task *mp = head->task;
-temp = head->next;
+    // pointer to each task in the list for iteration
+    struct node *temp;
+    // pointer to the next shorest brust time task
+    Task *nextTask = head->task;
 
-    while (temp != NULL) {
-        if (temp->task->burst < mp->burst)
-            mp = temp->task;
+    // start with the head of the list
+    temp = head->next;
+
+    // iterate through the task list
+    while (temp != NULL)
+    {
+        // assign the next task to be the current task if its burst time is shorter
+        if (temp->task->burst < nextTask->burst)
+            nextTask = temp->task;
 
         temp = temp->next;
     }
 
-    return mp;
+    return nextTask;
 }

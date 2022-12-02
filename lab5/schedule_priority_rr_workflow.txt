@@ -1,5 +1,4 @@
 schedule_priority_rr:
-
 while head is not NULL:
 	ps = getHighestPriorityProcesses() - list of nodes
 	runRoundRobin(ps)
@@ -14,6 +13,7 @@ getHighestPriorityProcesses():
 		if(tmp.priority == hp)
 			ps.add(tmp)
 		tmp = tmp.next
+	return ps
 
 getHighestPriority():
 	tmp=head
